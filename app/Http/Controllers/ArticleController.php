@@ -20,30 +20,41 @@ public function create() {
     return view('articles.create');
 
 }
-
-
 public function store(Request $request)
 {
+    // Validation des champs de la requête
     $request->validate([
         'nom' => 'required',
         'description' => 'required',
-        'image' => '|image|mimes:jpeg,png,jpg,PNG,gif,svg|max:2048',
+        'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
+    // Initialisation de la variable pour le chemin de l'image
+    $image = null;
+
+    // Vérifier si un fichier image est uploadé
     if ($request->hasFile('image')) {
-        foreach ($request->photos as $photo) {
-            $filename = 'img-'.time().'.'.$photo->getClientOriginalExtension();
-            $photo->storeAs('public/photos/',$filename);
-            Article::create([
-                'filename' => $filename
-            ]);
+        // Stocker l'image dans le répertoire 'public/blog'
+        $chemin_image = $request->file('image')->store('public/blog');
+
+        // Vérifier si le chemin de l'image est bien généré
+        if (!$chemin_image) {
+            return redirect()->back()->with('error', 'Erreur lors du téléchargement de l\'image.');
         }
+
+        // Récupérer le nom du fichier de l'image
+        $image = basename($chemin_image);
     }
-    Article::create($request->all());
 
-        return redirect()->route('article.index')
-                         ->with('success', 'Post created successfully.');
+    // Créer un nouvel article
+    $article = new Article();
+    $article->nom = $request->nom;
+    $article->description = $request->description;
+    $article->image = $image; // Nom du fichier de l'image
+    $article->save();
 
+    return redirect()->route('article.index')
+                     ->with('success', 'Article créé avec succès.');
 }
 
 
