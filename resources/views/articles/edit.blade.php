@@ -23,7 +23,7 @@
 
                             <div class="row mt-5 ">
                                 <div class="col-lg-11">
-                                    <h2>Modifier contact</h2>
+                                    <h2>Modifier article</h2>
                                 </div>
                                 <div class="col-lg-1">
                                     <a  href="/" class="btn btn-outline-primary">Retour</a>

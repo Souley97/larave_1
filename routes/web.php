@@ -14,6 +14,8 @@ Route::controller(ArticleController::class)->group(function () {
 
     Route::get('articles', 'index');
     Route::get('/article/create', 'create')->name('article.create');
+    Route :: post ( 'article/store', 'store') -> name ( 'article.store' );
+
     Route::get('/article/{id}', 'show')->name('article.detais');
     Route::get('/article/{id}/edit', 'edit');
 
