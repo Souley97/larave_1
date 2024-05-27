@@ -9,8 +9,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('articles', [ArticleController::class, 'index'])->name('article.index');
-// Route::get('article/{id}', [ArticleController::class, 'details'])->name('article.detais');
-Route::get('article/', [ArticleController::class, 'show'])->name('article.detais');
-Route::get('article/create', [ArticleController::class, 'create'])->name('article.create');
-Route::post('article/store', [ArticleController::class, 'store'])->name('article.store');
+
+Route::controller(ArticleController::class)->group(function () {
+
+    Route::get('articles', 'index');
+    Route::get('/article/create', 'create')->name('article.create');
+    Route::get('/article/{id}', 'show')->name('article.detais');
+    Route::get('/article/{id}/edit', 'edit');
+
+
+    Route::post('/article', 'store');
+    Route::patch('/article/{id}', 'update');
+    Route::delete('/article/{id}', 'destroy');
+    });
