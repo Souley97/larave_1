@@ -1,78 +1,50 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+    <title>Modifier un Article</title>
+    <!-- Inclure les fichiers CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Modifier un Article</h1>
 
-        <title>Laravel</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
-        <!-- Styles -->
-
-    </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-
-
-        <main class="mt-6 container mb-6">
-            <div class="row mt-5 ">
-
-
-                            <div class="row mt-5 ">
-                                <div class="col-lg-11">
-                                    <h2>Modifier article</h2>
-                                </div>
-                                <div class="col-lg-1">
-                                    <a  href="/" class="btn btn-outline-primary">Retour</a>
-                                </div>
-                            </div>
-                            @if ($errors->any())
-
-                                <div class="alert alert-danger">
-
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-
-                                </div>
-
-                            @endif
-
-                            <form method="post" action="{{ url('article/'. $article->id) }}" class="max-w-lg mx-auto" >
-                                @method('PATCH')
-                                @csrf
-
-
-                                <div class="form-group mb-3">
-
-                                    <label for="nom">Nom:</label>
-                                    <input type="text" class="form-control" id="nom" placeholder="Entrer Nom" name="nom" value="{{ $article->nom }}">
-
-                                </div>
-
-                                <div class="form-group mb-3">
-
-                                    <label for="description">description:</label>
-                                    <input type="text" class="form-control" id="description" name="description" value="{{ $article->description }}">
-
-                                </div>
-
-
-
-                                <button type="submit" class="btn btn-primary">Enregistrer</button>
-
-                            </form>
-                        </div>
-                    </main>
-
-
-                </div>
-            </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </body>
+    @endif
+
+    <form action="{{ url('article/' . $article->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" name="nom" class="form-control" id="nom" value="{{ old('nom', $article->nom) }}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="description">{{ old('description', $article->description) }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            @if ($article->image)
+                <div>
+                    <img src="{{ asset('storage/blog/' . $article->image) }}" alt="{{ $article->nom }}" class="img-thumbnail" style="width: 150px;">
+                </div>
+            @endif
+            <input type="file" name="image" class="form-control mt-2" id="image">
+        </div>
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    </form>
+</div>
+
+<!-- Inclure les fichiers JS de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
 </html>

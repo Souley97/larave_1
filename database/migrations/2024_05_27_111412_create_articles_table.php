@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('description');
             $table->string('image')->nullable();
+            $table->boolean('a_la_une')->default(false);
             $table->timestamps();
         });
     }

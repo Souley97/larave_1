@@ -18,20 +18,21 @@
     <div class="row">
         @foreach ($articles as $article)
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card">
+
                     @if($article->image)
-                        <img src="{{ asset('images/'.$article->image) }}" class="card-img-top" alt="Image">
+                        <img src="{{ asset('storage/blog/' . $article->image) }}" class="card-img-top" alt="{{ $article->nom }}">
                     @else
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Image Placeholder">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Image placeholder">
                     @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->nom }}</h5>
-                        <p class="card-text">{{ Str::limit($article->description, 100) }}</p>
-                    </div>
-                    <div class="card-footer">
+                        <p class="card-text">{{ $article->description }}</p>
+                        <p class="card-text">{{ $article->a_la_une ? 'Yes' : 'No a la une' }}</p>
+                        <span class="card-text">{{ $article->created_at}}</span> <br>
                         <a href="{{ url('article/' . $article->id) }}" class="btn btn-info">Voir</a>
                         <a href="{{ url('article/' . $article->id . '/edit') }}" class="btn btn-primary">Modifier</a>
-                        <form action="{{ url('article/' . $article->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ url('article/' . $article->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>

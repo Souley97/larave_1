@@ -21,6 +21,6 @@ Route::controller(ArticleController::class)->group(function () {
 
 
     Route::post('/article', 'store');
-    Route::patch('/article/{id}', 'update');
+    Route::put('/article/{id}', 'update');
     Route::delete('/article/{id}', 'destroy');
     });

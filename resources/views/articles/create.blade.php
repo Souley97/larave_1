@@ -33,6 +33,22 @@
             <label for="image" class="form-label">Image</label>
             <input type="file" name="image" class="form-control" id="image">
         </div>
+        <div>
+            <label for="a_la_une">L'article est-il à la une</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="a_la_une" id="oui" value="1">
+              <label class="form-check-label" for="oui">
+                Oui
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="a_la_une" id="non" value="0">
+              <label class="form-check-label" for="non">
+                Non
+              </label>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Créer</button>
     </form>
 </div>
